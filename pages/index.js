@@ -1,14 +1,14 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, { Component } from 'react';
+import { SquareCSS, StatusCSS, BoardRowCSS, GameCSS, GameInfoCSS } from '../Componentes/Jogo/index.jsx';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Square(props) {
     return (
-        <button
-            className="square"
+        <SquareCSS
             onClick={props.onClick}
         >
             {props.value}
-        </button>
+        </SquareCSS>
     );
 }
 
@@ -59,46 +59,68 @@ class Board extends React.Component {
         const winner = calculateWinner(this.state.squares);
         let status;
         if (winner) {
-            status = 'Winner: ' + winner;
+            status = 'Ganhador: ' + winner;
         } else {
-            status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+            status = 'Próximo Jogador: ' + (this.state.xIsNext ? 'X' : 'O');
         }
 
         return (
-            <div>
-                <div className="status">{status}</div>
-                <div className="board-row">
+            <>
+                <StatusCSS>{status}</StatusCSS>
+                <BoardRowCSS>
                     {this.renderSquare(0)}
                     {this.renderSquare(1)}
                     {this.renderSquare(2)}
-                </div>
-                <div className="board-row">
+                </BoardRowCSS>
+                <BoardRowCSS>
                     {this.renderSquare(3)}
                     {this.renderSquare(4)}
                     {this.renderSquare(5)}
-                </div>
-                <div className="board-row">
+                </BoardRowCSS>
+                <BoardRowCSS>
                     {this.renderSquare(6)}
                     {this.renderSquare(7)}
                     {this.renderSquare(8)}
-                </div>
-            </div>
+                </BoardRowCSS>
+            </>
         );
     }
 }
 
+class Menu extends React.Component {
+    render() {
+
+        return (
+            <hader class="navbar fixed-bottom navbar-expand navbar-light bg-light flex-column flex-row" >
+                <nav>
+                    <a class="navbar-brand" href="#">
+                        <img src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" width="30" height="30" alt="" />
+                    </a>
+                    <a class="navbar-brand" href="#">
+                        <img src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" width="30" height="30" alt="" />
+                    </a>
+                </nav>
+            </hader>
+        )
+    }
+}
+
 class Game extends React.Component {
+
     render() {
         return (
-            <div className="game">
-                <div className="game-board">
-                    <Board />
-                </div>
-                <div className="game-info">
-                    <div>{/* status */}</div>
-                    <ol>{/* TODO */}</ol>
-                </div>
-            </div>
+            <>
+                <Menu />
+                <GameCSS>
+                    <div className="game-board">
+                        <Board />
+                    </div>
+                    <GameInfoCSS>
+                        <div>{/* status */}</div>
+                        <ol>{/* TODO */}</ol>
+                    </GameInfoCSS>
+                </GameCSS>
+            </>
         );
     }
 }
