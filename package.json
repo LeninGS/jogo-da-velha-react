@@ -1,0 +1,26 @@
+{
+  "name": "jogo-da-velha-react",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "next dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LeninGS/jogo-da-velha-react.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LeninGS/jogo-da-velha-react/issues"
+  },
+  "homepage": "https://github.com/LeninGS/jogo-da-velha-react#readme",
+  "dependencies": {
+    "next": "^11.1.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "styled-components": "^5.3.1"
+  }
+}
