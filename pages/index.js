@@ -1,6 +1,6 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { Component } from 'react';
 import { SquareCSS, StatusCSS, BoardRowCSS, GameCSS, GameInfoCSS } from '../Componentes/Jogo/index.jsx';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Square(props) {
     return (
@@ -12,61 +12,19 @@ function Square(props) {
     );
 }
 
-class Status extends React.Component {
-    render() {
-        return (
-            <div
-                className="status"
-                valueStatus={this.props.valueStatus}
-            >
-                Next player: {this.props.valueStatus}
-            </div>
-        );
-    }
-}
-
 class Board extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            squares: Array(9).fill(null),
-            xIsNext: true,
-        };
-    }
-
-    handleClick(i) {
-        const squares = this.state.squares.slice();
-        if (calculateWinner(squares) || squares[i]) {
-            return;
-        }
-        squares[i] = this.state.xIsNext ? 'X' : 'O';
-        this.setState({
-            squares: squares,
-            xIsNext: !this.state.xIsNext,
-        });
-    }
-
     renderSquare(i) {
         return (
             <Square
-                value={this.state.squares[i]}
-                onClick={() => this.handleClick(i)}
+                value={this.props.squares[i]}
+                onClick={() => this.props.onClick(i)}
             />
         );
     }
 
     render() {
-        const winner = calculateWinner(this.state.squares);
-        let status;
-        if (winner) {
-            status = 'Ganhador: ' + winner;
-        } else {
-            status = 'Próximo Jogador: ' + (this.state.xIsNext ? 'X' : 'O');
-        }
-
         return (
             <>
-                <StatusCSS>{status}</StatusCSS>
                 <BoardRowCSS>
                     {this.renderSquare(0)}
                     {this.renderSquare(1)}
@@ -106,18 +64,79 @@ class Menu extends React.Component {
 }
 
 class Game extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            history: [{
+                squares: Array(9).fill(null),
+            }],
+            stepNumber: 0,
+            xIsNext: true,
+        };
+    }
+
+    handleClick(i) {
+        const history = this.state.history.slice(0, this.state.stepNumber + 1);
+        const current = history[history.length - 1];
+        const squares = current.squares.slice();
+        if (calculateWinner(squares) || squares[i]) {
+            return;
+        }
+        squares[i] = this.state.xIsNext ? "X" : "O";
+        this.setState({
+            history: history.concat([
+                {
+                    squares: squares
+                }
+            ]),
+            stepNumber: history.length,
+            xIsNext: !this.state.xIsNext
+        });
+    }
+
+    jumpTo(step) {
+        this.setState({
+            stepNumber: step,
+            xIsNext: (step % 2) === 0
+        });
+    }
 
     render() {
+        const history = this.state.history;
+        const current = history[this.state.stepNumber];
+        const winner = calculateWinner(current.squares);
+
+        const moves = history.map((step, move) => {
+            const desc = move ?
+                'Go to move #' + move :
+                'Go to game start';
+            return (
+                <li key={move}>
+                    <button onClick={() => this.jumpTo(move)}>{desc}</button>
+                </li>
+            );
+        });
+
+        let status;
+        if (winner) {
+            status = "Winner: " + winner;
+        } else {
+            status = "Next player: " + (this.state.xIsNext ? "X" : "O");
+        }
+
         return (
             <>
                 <Menu />
                 <GameCSS>
                     <div className="game-board">
-                        <Board />
+                        <Board
+                            squares={current.squares}
+                            onClick={i => this.handleClick(i)}
+                        />
                     </div>
                     <GameInfoCSS>
-                        <div>{/* status */}</div>
-                        <ol>{/* TODO */}</ol>
+                        <div>{status}</div>
+                        <ol>{moves}</ol>
                     </GameInfoCSS>
                 </GameCSS>
             </>
