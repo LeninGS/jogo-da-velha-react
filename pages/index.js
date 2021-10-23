@@ -150,6 +150,7 @@ export default class Jogo extends React.Component {
                         />
                     </BoardGameCSS>
                     <HistoryCSS>
+                        Histórico de Jogadas
                         {movimentos}
                     </HistoryCSS>
                 </GameCSS>
