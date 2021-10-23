@@ -7,7 +7,6 @@ export const SquareCSS = styled.button`
     border: 1px solid gray;
     float: left;
     font-size: 24px;
-    font-weight: bold;
     line-height: 34px;
     height: 64px;
     margin-right: -1px;
@@ -16,6 +15,7 @@ export const SquareCSS = styled.button`
     text-align: center;
     width: 64px;
     cursor: pointer;
+
     &:focus{
         outline: none;
     }
@@ -26,22 +26,51 @@ export const GameCSS = styled.div`
     flex-direction: row;
     justify-content: center;
     flex-shrink: 1;
-`
-
-export const GameInfoCSS = styled.div`
-    margin-left: 20px;
-`
-
-export const StatusCSS = styled.div`
-    margin-bottom: 10px;
     margin-top: 10px;
-    font-size: 20px;
+    min-width: 230px;
+
+    @media(max-width: 500px){
+        flex-direction: column; 
+        align-items: center;   
+    }
+`
+
+export const BoardGameCSS = styled.div`
+    
+`
+
+export const StatusCSS = styled.div` 
+    display: flex;  
+    justify-content: center;
+    font-size: x-large;
 `
 
 export const BoardRowCSS = styled.div`
+    justify-content: center;
+
     &:after{
         clear: both;
     content: "";
     display: table;
+    }
+`
+
+export const HistoryCSS = styled.ol`
+    margin-left: 20px;
+    margin-bottom: 50px;
+    width: 200px;
+
+    & > a:first-child{
+        background-color: darkcyan;
+        color: white;
+    }
+
+    & > a:last-child{
+        background-color: powderblue;
+    }
+
+     @media(max-width: 500px){ 
+        margin-left: 0px;       
+        margin-top: 20px;
     }
 `

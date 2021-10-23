@@ -11,4 +11,8 @@ export const GlobalStyles = createGlobalStyle`
         font: 14px;
         margin: 20px;
     }
+
+    ol {
+        padding: 0px;
+    }
 `

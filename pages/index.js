@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { Component } from 'react';
-import { SquareCSS, StatusCSS, BoardRowCSS, GameCSS, GameInfoCSS } from '../Componentes/Jogo/index.jsx';
+import { SquareCSS, BoardRowCSS, GameCSS, HistoryCSS, BoardGameCSS, StatusCSS } from '../Componentes/Jogo/index.jsx';
 
 function Square(props) {
     return (
@@ -16,7 +16,7 @@ class Board extends React.Component {
     renderSquare(i) {
         return (
             <Square
-                value={this.props.squares[i]}
+                value={this.props.quadrados[i]}
                 onClick={() => this.props.onClick(i)}
             />
         );
@@ -47,105 +47,106 @@ class Board extends React.Component {
 
 class Menu extends React.Component {
     render() {
-
         return (
-            <hader class="navbar fixed-bottom navbar-expand navbar-light bg-light flex-column flex-row" >
+            <header class="navbar fixed-bottom navbar-expand navbar-light bg-light flex-column flex-row" >
                 <nav>
-                    <a class="navbar-brand" href="#">
-                        <img src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" width="30" height="30" alt="" />
+                    <a key="home-page" class="navbar-brand" href="#">
+                        <img src="https://icon2.cleanpng.com/20180613/ezu/kisspng-tic-tac-toe-bitmap-computer-icons-bmp-file-format-5b212cddf1f055.434522481528900829991.jpg" width="30" height="30" alt="" />
                     </a>
-                    <a class="navbar-brand" href="#">
-                        <img src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" width="30" height="30" alt="" />
+                    <a key="refresh-page" class="navbar-brand" href="#" onClick={window.location.reload()}>
+                        <img src="https://images.vexels.com/media/users/3/128639/isolated/preview/62da532313d78f789be64c06811f39f0-reset-icon-svg.png" width="30" height="30" alt="" />
                     </a>
                 </nav>
-            </hader>
+            </header >
         )
     }
 }
 
-class Game extends React.Component {
+class Jogo extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            history: [{
-                squares: Array(9).fill(null),
+            historico: [{
+                quadrados: Array(9).fill(null),
             }],
-            stepNumber: 0,
-            xIsNext: true,
+            numeroPasso: 0,
+            xEProximo: true,
         };
     }
 
-    handleClick(i) {
-        const history = this.state.history.slice(0, this.state.stepNumber + 1);
-        const current = history[history.length - 1];
-        const squares = current.squares.slice();
-        if (calculateWinner(squares) || squares[i]) {
+    handleClique(i) {
+        const historico = this.state.historico.slice(0, this.state.numeroPasso + 1);
+        const atual = historico[historico.length - 1];
+        const quadrados = atual.quadrados.slice();
+        if (calcularVencedor(quadrados) || quadrados[i]) {
             return;
         }
-        squares[i] = this.state.xIsNext ? "X" : "O";
+        quadrados[i] = this.state.xEProximo ? "X" : "O";
         this.setState({
-            history: history.concat([
+            historico: historico.concat([
                 {
-                    squares: squares
+                    quadrados: quadrados
                 }
             ]),
-            stepNumber: history.length,
-            xIsNext: !this.state.xIsNext
+            numeroPasso: historico.length,
+            xEProximo: !this.state.xEProximo
         });
     }
 
-    jumpTo(step) {
+    jumpTo(passo) {
         this.setState({
-            stepNumber: step,
-            xIsNext: (step % 2) === 0
+            numeroPasso: passo,
+            xEProximo: (passo % 2) === 0
         });
     }
 
     render() {
-        const history = this.state.history;
-        const current = history[this.state.stepNumber];
-        const winner = calculateWinner(current.squares);
+        const historico = this.state.historico;
+        const atual = historico[this.state.numeroPasso];
+        const vencedor = calcularVencedor(atual.quadrados);
 
-        const moves = history.map((step, move) => {
-            const desc = move ?
-                'Go to move #' + move :
-                'Go to game start';
+        const movimentos = historico.map((passo, movimento) => {
+            var desc = 'Início da Partida';
+            if (movimento == historico.length - 1) {
+                desc = 'Jogada Atual';
+            } else if (movimento) {
+                desc = 'Jogada nº ' + movimento;
+            }
+
             return (
-                <li key={move}>
-                    <button onClick={() => this.jumpTo(move)}>{desc}</button>
-                </li>
+                <a href="#" class="list-group-item list-group-item-action" onClick={() => this.jumpTo(movimento)}>{desc}</a>
             );
         });
 
         let status;
-        if (winner) {
-            status = "Winner: " + winner;
+        if (vencedor) {
+            status = "Vencedor: " + vencedor;
         } else {
-            status = "Next player: " + (this.state.xIsNext ? "X" : "O");
+            status = "Jogando Agora: " + (this.state.xEProximo ? "X" : "O");
         }
 
         return (
             <>
                 <Menu />
                 <GameCSS>
-                    <div className="game-board">
+                    <BoardGameCSS>
+                        <StatusCSS>{status}</StatusCSS>
                         <Board
-                            squares={current.squares}
-                            onClick={i => this.handleClick(i)}
+                            quadrados={atual.quadrados}
+                            onClick={i => this.handleClique(i)}
                         />
-                    </div>
-                    <GameInfoCSS>
-                        <div>{status}</div>
-                        <ol>{moves}</ol>
-                    </GameInfoCSS>
+                    </BoardGameCSS>
+                    <HistoryCSS>
+                        {movimentos}
+                    </HistoryCSS>
                 </GameCSS>
             </>
         );
     }
 }
 
-function calculateWinner(squares) {
-    const lines = [
+function calcularVencedor(quadrados) {
+    const linhas = [
         [0, 1, 2],
         [3, 4, 5],
         [6, 7, 8],
@@ -155,10 +156,10 @@ function calculateWinner(squares) {
         [0, 4, 8],
         [2, 4, 6],
     ];
-    for (let i = 0; i < lines.length; i++) {
-        const [a, b, c] = lines[i];
-        if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-            return squares[a];
+    for (let i = 0; i < linhas.length; i++) {
+        const [a, b, c] = linhas[i];
+        if (quadrados[a] && quadrados[a] === quadrados[b] && quadrados[a] === quadrados[c]) {
+            return quadrados[a];
         }
     }
     return null;
@@ -166,4 +167,4 @@ function calculateWinner(squares) {
 
 // ========================================
 
-export default Game;
+export default Jogo;
