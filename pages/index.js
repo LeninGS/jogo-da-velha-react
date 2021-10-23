@@ -55,9 +55,6 @@ class Menu extends React.Component {
         return (
             <header class="navbar fixed-bottom navbar-expand navbar-light bg-light flex-column flex-row" >
                 <nav>
-                    <a key="home-page" class="navbar-brand" href="#">
-                        <img src="https://icon2.cleanpng.com/20180613/ezu/kisspng-tic-tac-toe-bitmap-computer-icons-bmp-file-format-5b212cddf1f055.434522481528900829991.jpg" width="30" height="30" alt="" />
-                    </a>
                     <a key="refresh-page" class="navbar-brand" href="#" onClick={recarregarPagina}>
                         <img src="https://images.vexels.com/media/users/3/128639/isolated/preview/62da532313d78f789be64c06811f39f0-reset-icon-svg.png" width="30" height="30" alt="" />
                     </a>
