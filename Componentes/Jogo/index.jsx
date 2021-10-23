@@ -17,7 +17,11 @@ export const SquareCSS = styled.button`
     cursor: pointer;
 
     &:focus{
-        outline: none;
+        outline: none;        
+    }
+
+    &:hover{
+        background-color: lightcyan;
     }
 `
 
@@ -50,8 +54,8 @@ export const BoardRowCSS = styled.div`
 
     &:after{
         clear: both;
-    content: "";
-    display: table;
+        content: "";
+        display: table;
     }
 `
 
@@ -63,14 +67,18 @@ export const HistoryCSS = styled.ol`
 
     & > a:last-child{
         background-color: powderblue;
+
+        border-radius: 0px 0px 10px 10px;
     }
     
     & > a:first-child{
         background-color: darkcyan;
         color: white;
+
+        border-radius: 10px 10px 0px 0px;
     }
 
-     @media(max-width: 500px){ 
+    @media(max-width: 500px){ 
         margin-left: 0px;       
         margin-top: 20px;
     }

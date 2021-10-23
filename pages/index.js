@@ -1,6 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { Component } from 'react';
-import { SquareCSS, BoardRowCSS, GameCSS, HistoryCSS, BoardGameCSS, StatusCSS } from '../Componentes/Jogo/index.jsx';
+import styled from 'styled-components';
+import { SquareCSS, BoardRowCSS, GameCSS, HistoryCSS, HistoryAlert, BoardGameCSS, StatusCSS } from '../Componentes/Jogo/index.jsx';
 
 function Square(props) {
     return (
@@ -72,7 +73,16 @@ export default class Jogo extends React.Component {
             }],
             numeroPasso: 0,
             xEProximo: true,
+            HistoricoAlerta: false,
         };
+    }
+
+    handleHistoricoAlerta(hidden) {
+        const visiHistorico = (hidden) ? "hidden" : this.state.HistoricoAlerta;
+
+        this.setState({
+            HistoricoAlerta: !visiHistorico
+        })
     }
 
     handleClique(i) {
