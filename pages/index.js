@@ -1,6 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { Component } from 'react';
-import Router, { useRouter } from "next/router";
 import { SquareCSS, BoardRowCSS, GameCSS, HistoryCSS, BoardGameCSS, StatusCSS } from '../Componentes/Jogo/index.jsx';
 
 function Square(props) {
@@ -13,8 +12,8 @@ function Square(props) {
     );
 }
 
-class Board extends React.Component {
-    renderSquare(i) {
+class Tabuleiro extends React.Component {
+    renderizarQuadrado(i) {
         return (
             <Square
                 value={this.props.quadrados[i]}
@@ -27,19 +26,19 @@ class Board extends React.Component {
         return (
             <>
                 <BoardRowCSS>
-                    {this.renderSquare(0)}
-                    {this.renderSquare(1)}
-                    {this.renderSquare(2)}
+                    {this.renderizarQuadrado(0)}
+                    {this.renderizarQuadrado(1)}
+                    {this.renderizarQuadrado(2)}
                 </BoardRowCSS>
                 <BoardRowCSS>
-                    {this.renderSquare(3)}
-                    {this.renderSquare(4)}
-                    {this.renderSquare(5)}
+                    {this.renderizarQuadrado(3)}
+                    {this.renderizarQuadrado(4)}
+                    {this.renderizarQuadrado(5)}
                 </BoardRowCSS>
                 <BoardRowCSS>
-                    {this.renderSquare(6)}
-                    {this.renderSquare(7)}
-                    {this.renderSquare(8)}
+                    {this.renderizarQuadrado(6)}
+                    {this.renderizarQuadrado(7)}
+                    {this.renderizarQuadrado(8)}
                 </BoardRowCSS>
             </>
         );
@@ -109,7 +108,9 @@ export default class Jogo extends React.Component {
 
         const movimentos = historico.map((passo, movimento) => {
             var desc = 'Início da Partida';
-            if (movimento == historico.length - 1) {
+            if (movimento == 0) {
+                desc = 'Início da Partida';
+            } else if (movimento == historico.length - 1) {
                 desc = 'Jogada Atual';
             } else if (movimento) {
                 desc = 'Jogada nº ' + movimento;
@@ -122,7 +123,7 @@ export default class Jogo extends React.Component {
 
         let status;
         if (vencedor) {
-            status = "Vencedor: " + vencedor;
+            status = (vencedor != 'velha') ? "Vencedor: " + vencedor : "Deu Velha!";
         } else {
             status = "Jogando Agora: " + (this.state.xEProximo ? "X" : "O");
         }
@@ -133,7 +134,7 @@ export default class Jogo extends React.Component {
                 <GameCSS>
                     <BoardGameCSS>
                         <StatusCSS>{status}</StatusCSS>
-                        <Board
+                        <Tabuleiro
                             quadrados={atual.quadrados}
                             onClick={i => this.handleClique(i)}
                         />
@@ -162,6 +163,8 @@ function calcularVencedor(quadrados) {
         const [a, b, c] = linhas[i];
         if (quadrados[a] && quadrados[a] === quadrados[b] && quadrados[a] === quadrados[c]) {
             return quadrados[a];
+        } else if (!(quadrados.includes(null))) {
+            return 'velha'
         }
     }
     return null;

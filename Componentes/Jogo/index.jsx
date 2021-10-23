@@ -59,14 +59,15 @@ export const HistoryCSS = styled.ol`
     margin-left: 20px;
     margin-bottom: 50px;
     width: 200px;
-
-    & > a:first-child{
-        background-color: darkcyan;
-        color: white;
-    }
+    text-align: center;
 
     & > a:last-child{
         background-color: powderblue;
+    }
+    
+    & > a:first-child{
+        background-color: darkcyan;
+        color: white;
     }
 
      @media(max-width: 500px){ 
