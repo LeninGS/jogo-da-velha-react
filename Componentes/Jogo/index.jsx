@@ -73,18 +73,18 @@ export const HistoryCSS = styled.ol`
 
     & > a > .iconCSS {
         transform-origin: 50% 55%;
+        transition: .2s ease-in-out 100ms;
 
-        animation-duration: .7s;
-        transition: all 2s ease-in-out 100ms;
+        animation-duration: .5s;        
         animation-name: out;
         animation-fill-mode: forwards;
     }
 
     & > a:hover > .iconCSS {
         color: darkcyan;
+        transition: .2s ease-in-out 100ms;
         
-        animation-duration: .7s;
-        transition: all 2s ease-in-out 100ms;
+        animation-duration: .5s;        
         animation-name: in;
     }
 
