@@ -134,3 +134,26 @@ export const HistoryCSS = styled.ol`
         margin-top: 20px;
     }
 `
+
+export const MenuCSS = styled.nav`
+    & > a > .refreshIcon:active {
+        transition: .2s ease-in 100ms;
+
+        animation: in 1.5s infinite;
+    }
+
+    & > a > .refreshIcon:hover {
+        transition: .2s ease-in 100ms;
+
+        animation: in 1.5s infinite;
+    }
+
+    @keyframes in {
+        0% { 
+            transform: rotate(0deg);           
+        }
+        100% {             
+            transform: rotate(360deg);
+        }
+    }
+`

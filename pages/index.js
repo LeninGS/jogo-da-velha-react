@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { SquareCSS, BoardRowCSS, GameCSS, HistoryCSS, HistoryAlert, BoardGameCSS, StatusCSS } from '../Componentes/Jogo/index.jsx';
+import { SquareCSS, BoardRowCSS, GameCSS, HistoryCSS, MenuCSS, BoardGameCSS, StatusCSS } from '../Componentes/Jogo/index.jsx';
 
 function Square(props) {
     return (
@@ -54,11 +54,11 @@ class Menu extends React.Component {
 
         return (
             <header class="navbar fixed-bottom navbar-expand navbar-light bg-light flex-column flex-row" >
-                <nav>
+                <MenuCSS>
                     <a key="refresh-page" class="navbar-brand" href="#" onClick={recarregarPagina}>
-                        <img src="https://images.vexels.com/media/users/3/128639/isolated/preview/62da532313d78f789be64c06811f39f0-reset-icon-svg.png" width="30" height="30" alt="" />
+                        <img class="refreshIcon" src="https://images.vexels.com/media/users/3/128639/isolated/preview/62da532313d78f789be64c06811f39f0-reset-icon-svg.png" width="30" height="30" alt="" />
                     </a>
-                </nav>
+                </MenuCSS>
             </header >
         )
     }
