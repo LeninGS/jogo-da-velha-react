@@ -65,6 +65,33 @@ export const HistoryCSS = styled.ol`
     width: 200px;
     text-align: center;
 
+    & > a {
+        display: flex;        
+        justify-content: center;
+        gap: 20px;
+    }
+
+    & > a > .iconCSS {
+        transform-origin: 50% 55%;
+
+        animation-duration: .7s;
+        transition: all 2s ease-in-out 100ms;
+        animation-name: out;
+        animation-fill-mode: forwards;
+    }
+
+    & > a:hover > .iconCSS {
+        color: darkcyan;
+        
+        animation-duration: .7s;
+        transition: all 2s ease-in-out 100ms;
+        animation-name: in;
+    }
+
+    & > a:hover:not(:first-child):not(:last-child){
+        background-color: lightcyan;
+    }
+
     & > a:last-child{
         background-color: powderblue;
 
@@ -76,6 +103,30 @@ export const HistoryCSS = styled.ol`
         color: white;
 
         border-radius: 10px 10px 0px 0px;
+    }
+
+    @keyframes in {
+        0% { 
+            position: relative;
+            left: 0px;           
+        }
+        100% { 
+            position: relative;
+            left: -10px;
+            transform: rotate(180deg);
+        }
+    }
+
+    @keyframes out {
+        0% { 
+            position: relative;
+            left: -10px;
+            transform: rotate(180deg);                       
+        }
+        100% {
+            position: relative;
+            left: 0px;            
+        }
     }
 
     @media(max-width: 500px){ 
